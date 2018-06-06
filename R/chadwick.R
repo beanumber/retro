@@ -8,7 +8,7 @@ install_chadwick <- function(obj, ...) {
   download.file(url, destfile = lcl)
   untar(lcl, exdir = attr(obj, "raw_dir"))
   # export LD_LIBRARY_PATH=/usr/local/lib
-  # autoconf -i
+  # autoreconf -i
   # ./configure
   # make
   # sudo make install

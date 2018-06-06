@@ -15,7 +15,7 @@
 #'     etl_load(season = 2014)
 #' }
 
-etl_extract.etl_retro <- function(obj, season, ...) {
+etl_extract.etl_retro <- function(obj, season = 2017, ...) {
   # game logs
   remote <- paste0("http://www.retrosheet.org/gamelogs/gl", season, ".zip")
   local <- file.path(attr(obj, "raw"), paste0("gl", season, ".zip"))
@@ -32,12 +32,17 @@ etl_extract.etl_retro <- function(obj, season, ...) {
 #' @rdname etl_extract.etl_retro
 #' @export
 
-etl_transform.etl_retro <- function(obj, season, ...) {
+etl_transform.etl_retro <- function(obj, season = 2017, ...) {
   # game logs
   zipped <- match_files_by_year_months(
     list.files(attr(obj, "raw"), full.names = TRUE),
     pattern = "gl%Y.zip", year = season)
   lapply(zipped, unzip, exdir = attr(obj, "load"))
+
+  cmds <- paste0("cwgame -n -f 0-83 -y ", season, " ", season,
+                 "*.EV* > games_", season, ".csv")
+  message(paste0("\n", cmds))
+  system(cmds)
 
   # events
   zipped <- match_files_by_year_months(
@@ -45,23 +50,25 @@ etl_transform.etl_retro <- function(obj, season, ...) {
     pattern = "%Yeve.zip", year = season)
   lapply(zipped, unzip, exdir = attr(obj, "load"))
 
-  parsed <- match_files_by_year_months(
-    list.files(attr(obj, "load"), full.names = TRUE),
-    pattern = "GL%Y.TXT", year = season)
+  cmds <- paste0("cwevent -n -f 0-96 -x 0-60 -y ", season, " ", season,
+                 "*.EV* > events_", season, ".csv")
+  message(paste0("\n", cmds))
 
-  cmds <- paste0("cwgame -n -f 0-83 -y ", season, " ", season,
-                 "*.ev* > GL", season, ".TXT")
-  system(cmds)
   invisible(obj)
 }
 
 #' @rdname etl_extract.etl_retro
 #' @export
 
-etl_load.etl_retro <- function(obj, season, ...) {
+etl_load.etl_retro <- function(obj, season = 2017, ...) {
   src <- match_files_by_year_months(
     list.files(attr(obj, "load"), full.names = TRUE),
-    pattern = "GL%Y.TXT", year = season)
+    pattern = "games_%Y.csv", year = season)
   smart_upload(obj, src = src, tablenames = "games")
+
+  src <- match_files_by_year_months(
+    list.files(attr(obj, "load"), full.names = TRUE),
+    pattern = "events_%Y.csv", year = season)
+  smart_upload(obj, src = src, tablenames = "events")
   invisible(obj)
 }
