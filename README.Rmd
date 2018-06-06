@@ -1,16 +1,20 @@
-retro
-================
+---
+title: "retro"
+output:
+  github_document:
+    html_preview: true
+---
 
 [![Travis-CI Build Status](https://travis-ci.org/beanumber/retro.svg?branch=master)](https://travis-ci.org/beanumber/retro)
 
 An R package for creating a Retrosheet database using the ETL framework
 
-``` r
+```{r, eval=FALSE}
 devtools::install_github("beanumber/retro")
 library(retro)
 ```
 
-``` r
+```{r, eval=FALSE}
 system("mysql -e 'CREATE DATABASE IF NOT EXISTS retrosheet;'")
 db <- src_mysql_cnf("retrosheet")
 retro <- etl("retro", db = db, dir = "~/dumps/retro/")

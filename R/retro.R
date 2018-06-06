@@ -6,7 +6,7 @@
 #' @examples
 #' \dontrun{
 #'   system("mysql -e 'CREATE DATABASE IF NOT EXISTS retrosheet;'")
-#'   db <- src_mysql_cnf("retrosheet", hostname = "127.0.0.1")
+#'   db <- src_mysql_cnf("retrosheet)
 #'   retro <- etl("retro", db = db, dir = "~/dumps/retro/")
 #'
 #'   retro %>%
