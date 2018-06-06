@@ -1,0 +1,24 @@
+# Sample .travis.yml for R projects
+
+language: r
+r:
+  - oldrel
+  - release
+  - devel
+warnings_are_errors: true
+sudo: required
+
+addons:
+  apt:
+    sources:
+      - sourceline: 'ppa:marutter/c2d4u'
+    packages:
+      - chadwick
+
+#r_binary_packages:
+#  - rgdal
+#  - rgeos
+
+r_packages:
+  - devtools
+  - Rcpp
