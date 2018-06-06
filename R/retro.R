@@ -43,7 +43,7 @@ etl_transform.etl_retro <- function(obj, season = 2017, ...) {
                  "cwgame -n -f 0-83 -y ", season, " ", season,
                  "*.EV* > games_", season, ".csv")
   message(paste0("\n", cmds))
-  system(cmds)
+  lapply(cmds, system)
 
   # events
   zipped <- match_files_by_year_months(
@@ -55,7 +55,7 @@ etl_transform.etl_retro <- function(obj, season = 2017, ...) {
                  "cwevent -n -f 0-96 -x 0-60 -y ", season, " ", season,
                  "*.EV* > events_", season, ".csv")
   message(paste0("\n", cmds))
-  system(cmds)
+  lapply(cmds, system)
 
   invisible(obj)
 }
