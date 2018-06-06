@@ -39,7 +39,8 @@ etl_transform.etl_retro <- function(obj, season = 2017, ...) {
     pattern = "gl%Y.zip", year = season)
   lapply(zipped, unzip, exdir = attr(obj, "load"))
 
-  cmds <- paste0("cwgame -n -f 0-83 -y ", season, " ", season,
+  cmds <- paste0("cd ", attr(obj, "load"), "; ",
+                 "cwgame -n -f 0-83 -y ", season, " ", season,
                  "*.EV* > games_", season, ".csv")
   message(paste0("\n", cmds))
   system(cmds)
@@ -50,9 +51,11 @@ etl_transform.etl_retro <- function(obj, season = 2017, ...) {
     pattern = "%Yeve.zip", year = season)
   lapply(zipped, unzip, exdir = attr(obj, "load"))
 
-  cmds <- paste0("cwevent -n -f 0-96 -x 0-60 -y ", season, " ", season,
+  cmds <- paste0("cd ", attr(obj, "load"), "; ",
+                 "cwevent -n -f 0-96 -x 0-60 -y ", season, " ", season,
                  "*.EV* > events_", season, ".csv")
   message(paste0("\n", cmds))
+  system(cmds)
 
   invisible(obj)
 }
