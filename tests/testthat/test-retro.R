@@ -1,7 +1,7 @@
 context("retro")
 
 test_that("retro works", {
-  if (require(RMySQL) && mysqlHasDefault()) {
+  if (require(RMySQL) && RMySQL::mysqlHasDefault()) {
     my_dir = "~/dumps/retro/"
     if (dir.exists(my_dir)) {
       db <- src_mysql_cnf("retrosheet")
