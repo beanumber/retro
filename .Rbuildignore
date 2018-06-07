@@ -1,2 +1,8 @@
+^\.travis\.yml$
 ^.*\.Rproj$
 ^\.Rproj\.user$
+^.*README\.Rmd$
+^.*ignore\.R$
+^.*\.Rignore$
+^cran-comments\.md$
+^revdep$

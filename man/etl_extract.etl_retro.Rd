@@ -6,11 +6,11 @@
 \alias{etl_load.etl_retro}
 \title{Download Retrosheet data}
 \usage{
-\method{etl_extract}{etl_retro}(obj, season, ...)
+\method{etl_extract}{etl_retro}(obj, season = 2017, ...)
 
-\method{etl_transform}{etl_retro}(obj, season, ...)
+\method{etl_transform}{etl_retro}(obj, season = 2017, ...)
 
-\method{etl_load}{etl_retro}(obj, season, ...)
+\method{etl_load}{etl_retro}(obj, season = 2017, ...)
 }
 \arguments{
 \item{obj}{the ETL object}
@@ -25,7 +25,7 @@ Download Retrosheet data
 \examples{
 \dontrun{
   system("mysql -e 'CREATE DATABASE IF NOT EXISTS retrosheet;'")
-  db <- src_mysql_cnf("retrosheet", hostname = "127.0.0.1")
+  db <- src_mysql_cnf("retrosheet")
   retro <- etl("retro", db = db, dir = "~/dumps/retro/")
 
   retro \%>\%

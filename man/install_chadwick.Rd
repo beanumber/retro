@@ -6,6 +6,11 @@
 \usage{
 install_chadwick(obj, ...)
 }
+\arguments{
+\item{obj}{An \code{etl_retro} object}
+
+\item{...}{currectly ignored}
+}
 \description{
 Install Chadwick
 }

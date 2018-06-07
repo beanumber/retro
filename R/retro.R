@@ -3,6 +3,8 @@
 #' @param season the season
 #' @param ... currently ignored
 #' @export
+#' @import etl
+#' @importFrom etl smart_download
 #' @examples
 #' \dontrun{
 #'   system("mysql -e 'CREATE DATABASE IF NOT EXISTS retrosheet;'")
@@ -31,13 +33,14 @@ etl_extract.etl_retro <- function(obj, season = 2017, ...) {
 
 #' @rdname etl_extract.etl_retro
 #' @export
+#' @importFrom utils unzip
 
 etl_transform.etl_retro <- function(obj, season = 2017, ...) {
   # game logs
   zipped <- match_files_by_year_months(
     list.files(attr(obj, "raw"), full.names = TRUE),
-    pattern = "gl%Y.zip", year = season)
-  lapply(zipped, unzip, exdir = attr(obj, "load"))
+    pattern = "gl%Y.zip", years = season)
+  lapply(zipped, utils::unzip, exdir = attr(obj, "load"))
 
   cmds <- paste0("cd ", attr(obj, "load"), "; ",
                  "cwgame -n -f 0-83 -y ", season, " ", season,
@@ -48,8 +51,8 @@ etl_transform.etl_retro <- function(obj, season = 2017, ...) {
   # events
   zipped <- match_files_by_year_months(
     list.files(attr(obj, "raw"), full.names = TRUE),
-    pattern = "%Yeve.zip", year = season)
-  lapply(zipped, unzip, exdir = attr(obj, "load"))
+    pattern = "%Yeve.zip", years = season)
+  lapply(zipped, utils::unzip, exdir = attr(obj, "load"))
 
   cmds <- paste0("cd ", attr(obj, "load"), "; ",
                  "cwevent -n -f 0-96 -x 0-60 -y ", season, " ", season,
@@ -61,17 +64,18 @@ etl_transform.etl_retro <- function(obj, season = 2017, ...) {
 }
 
 #' @rdname etl_extract.etl_retro
+#' @importFrom etl smart_upload
 #' @export
 
 etl_load.etl_retro <- function(obj, season = 2017, ...) {
   src <- match_files_by_year_months(
     list.files(attr(obj, "load"), full.names = TRUE),
-    pattern = "games_%Y.csv", year = season)
-  smart_upload(obj, src = src, tablenames = "games")
+    pattern = "games_%Y.csv", years = season)
+  etl::smart_upload(obj, src = src, tablenames = "games")
 
   src <- match_files_by_year_months(
     list.files(attr(obj, "load"), full.names = TRUE),
-    pattern = "events_%Y.csv", year = season)
+    pattern = "events_%Y.csv", years = season)
   smart_upload(obj, src = src, tablenames = "events")
   invisible(obj)
 }
