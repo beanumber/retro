@@ -24,4 +24,8 @@ retro %>%
   etl_extract(season = 2013:2016) %>%
   etl_transform(season = 2014:2016) %>%
   etl_load(season = 2014)
+
+# add partitions
+dbRunScript(retro$con, 
+            system.file("sql", "optimize.mysql", package = "retro"))
 ```
