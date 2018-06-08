@@ -163,7 +163,11 @@ CREATE TABLE `events` (
   `ASS10_FLD_CD` tinyint(1) unsigned NOT NULL,
   `UNKNOWN_OUT_EXC_FL` varchar(1) DEFAULT NULL,
   `UNCERTAIN_PLAY_EXC_FL` varchar(1) DEFAULT NULL,
-  KEY `events_gameid_idx` (`GAME_ID`)
+  KEY `events_gameid_idx` (`GAME_ID`),
+  KEY `events_batid_idx` (`BAT_ID`),
+  KEY `events_pitid_idx` (`PIT_ID`),
+  KEY `events_hometeamid_idx` (`HOME_TEAM_ID`),
+  KEY `events_awayteamid_idx` (`AWAY_TEAM_ID`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 /*Table structure for table `games` */
@@ -255,7 +259,9 @@ CREATE TABLE `games` (
   `HOME_LINEUP9_FLD_CD` int(11) DEFAULT NULL,
   `AWAY_FINISH_PIT_ID` varchar(8) DEFAULT NULL,
   `HOME_FINISH_PIT_ID` varchar(8) DEFAULT NULL,
-  KEY `games_gameid_idx` (`GAME_ID`)
+  KEY `games_gameid_idx` (`GAME_ID`),
+  KEY `events_hometeamid_idx` (`HOME_TEAM_ID`),
+  KEY `events_awayteamid_idx` (`AWAY_TEAM_ID`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 /*Table structure for table `subs` */
@@ -274,3 +280,4 @@ CREATE TABLE `subs` (
   `REMOVED_FLD_CD` int(11) DEFAULT NULL,
   `EVENT_ID` int(11) DEFAULT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+

@@ -5,6 +5,8 @@
 #' @export
 #' @import etl
 #' @importFrom etl smart_download
+#' @source Retrosheet: \url{http://www.retrosheet.org/game.htm}
+#' @references \url{http://www.retrosheet.org/location.htm}
 #' @examples
 #' \dontrun{
 #'   system("mysql -e 'CREATE DATABASE IF NOT EXISTS retrosheet;'")
@@ -60,6 +62,13 @@ etl_transform.etl_retro <- function(obj, season = 2017, ...) {
   message(paste0("\n", cmds))
   lapply(cmds, system)
 
+  # subs
+  cmds <- paste0("cd ", attr(obj, "load"), "; ",
+                 "cwsub -n -y ", season, " ", season,
+                 "*.EV* > subs_", season, ".csv")
+  message(paste0("\n", cmds))
+  lapply(cmds, system)
+
   invisible(obj)
 }
 
@@ -77,5 +86,11 @@ etl_load.etl_retro <- function(obj, season = 2017, ...) {
     list.files(attr(obj, "load"), full.names = TRUE),
     pattern = "events_%Y.csv", years = season)
   smart_upload(obj, src = src, tablenames = "events")
+
+  src <- match_files_by_year_months(
+    list.files(attr(obj, "load"), full.names = TRUE),
+    pattern = "subs_%Y.csv", years = season)
+  smart_upload(obj, src = src, tablenames = "subs")
+
   invisible(obj)
 }

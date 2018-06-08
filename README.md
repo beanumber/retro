@@ -25,3 +25,5 @@ retro %>%
 dbRunScript(retro$con, 
             system.file("sql", "optimize.mysql", package = "retro"))
 ```
+
+![](http://www.retrosheet.org/hitloc.jpg)
