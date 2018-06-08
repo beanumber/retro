@@ -16,3 +16,12 @@
 #' }
 "ballparks"
 
+#' Event codes
+#' @docType data
+#' @source \url{https://github.com/chadwickbureau/chadwick/blob/master/doc/cwevent.rst}
+#' @format Data frame with two columns
+#' \describe{
+#' \item{EVENT_CD}{Event code}
+#' \item{EVENT}{Description of the event}
+#' }
+"event_codes"
