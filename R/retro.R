@@ -38,6 +38,18 @@ etl_extract.etl_retro <- function(obj, season = 2017, ...) {
 #' @importFrom utils unzip
 
 etl_transform.etl_retro <- function(obj, season = 2017, ...) {
+  # events
+  zipped <- match_files_by_year_months(
+    list.files(attr(obj, "raw"), full.names = TRUE),
+    pattern = "%Yeve.zip", years = season)
+  lapply(zipped, utils::unzip, exdir = attr(obj, "load"))
+
+  cmds <- paste0("cd ", attr(obj, "load"), "; ",
+                 "cwevent -n -f 0-96 -x 0-62 -y ", season, " ", season,
+                 "*.EV* > events_", season, ".csv")
+  message(paste0("\n", cmds))
+  lapply(cmds, system)
+
   # game logs
   zipped <- match_files_by_year_months(
     list.files(attr(obj, "raw"), full.names = TRUE),
@@ -47,18 +59,6 @@ etl_transform.etl_retro <- function(obj, season = 2017, ...) {
   cmds <- paste0("cd ", attr(obj, "load"), "; ",
                  "cwgame -n -f 0-83 -y ", season, " ", season,
                  "*.EV* > games_", season, ".csv")
-  message(paste0("\n", cmds))
-  lapply(cmds, system)
-
-  # events
-  zipped <- match_files_by_year_months(
-    list.files(attr(obj, "raw"), full.names = TRUE),
-    pattern = "%Yeve.zip", years = season)
-  lapply(zipped, utils::unzip, exdir = attr(obj, "load"))
-
-  cmds <- paste0("cd ", attr(obj, "load"), "; ",
-                 "cwevent -n -f 0-96 -x 0-60 -y ", season, " ", season,
-                 "*.EV* > events_", season, ".csv")
   message(paste0("\n", cmds))
   lapply(cmds, system)
 
