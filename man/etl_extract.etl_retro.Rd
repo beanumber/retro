@@ -5,6 +5,9 @@
 \alias{etl_transform.etl_retro}
 \alias{etl_load.etl_retro}
 \title{Download Retrosheet data}
+\source{
+Retrosheet: \url{http://www.retrosheet.org/game.htm}
+}
 \usage{
 \method{etl_extract}{etl_retro}(obj, season = 2017, ...)
 
@@ -33,4 +36,7 @@ Download Retrosheet data
     etl_transform(season = 2014:2016) \%>\%
     etl_load(season = 2014)
 }
+}
+\references{
+\url{http://www.retrosheet.org/location.htm}
 }
