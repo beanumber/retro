@@ -27,3 +27,9 @@ dbRunScript(retro$con,
 ```
 
 ![](http://www.retrosheet.org/hitloc.jpg)
+
+Compare To
+----------
+
+-   (<https://github.com/rmscriven/retrosheet>): last commit was 2015; not on CRAN; does not require `chadwick`
+-   (<https://github.com/davidbmitchell/Baseball-PostgreSQL>): Only for PostgreSQL; also requires `chadwick`
