@@ -1,8 +1,11 @@
 Package: retro
 Title: Build a Retrosheet database
 Version: 0.0.0.9003
+Date: 2018-07-19
 Authors@R: person("Benjamin", "Baumer", email = "ben.baumer@gmail.com", role = c("aut", "cre"))
-Description: What the package does (one paragraph).
+Description: Building an SQL database of baseball play-by-play data from 
+    Retrosheet requires an ETL process and special tools. This package automates
+    and streamlines that process. 
 Depends:
   R (>= 3.3.0),
   etl
@@ -17,3 +20,5 @@ Suggests:
     rmarkdown,
     RMySQL
 VignetteBuilder: knitr
+URL: http://github.com/beanumber/retro
+BugReports: https://github.com/beanumber/retro/issues
