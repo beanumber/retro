@@ -44,9 +44,11 @@ etl_transform.etl_retro <- function(obj, season = 2017, ...) {
     pattern = "%Yeve.zip", years = season)
   lapply(zipped, utils::unzip, exdir = attr(obj, "load"))
 
-  cmds <- paste0("cd ", attr(obj, "load"), "; ",
-                 "cwevent -n -f 0-96 -x 0-62 -y ", season, " ", season,
-                 "*.EV* > events_", season, ".csv")
+  cmds <- paste0(
+    "cd ", attr(obj, "load"), "; ",
+#    "export LD_LIBRARY_PATH="
+    "cwevent -n -f 0-96 -x 0-62 -y ", season, " ", season,
+    "*.EV* > events_", season, ".csv")
   message(paste0("\n", cmds))
   lapply(cmds, system)
 
